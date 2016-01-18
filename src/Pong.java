@@ -1,84 +1,86 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 
+
+import javax.swing.JFrame;
 
 /**
  * Created by Ak__74 on 17.12.15.
  */
-public class Pong  extends Canvas implements Runnable{
+public class Pong extends JFrame {
 
-    static Racket racket;
-    InputCommands in;
-    JFrame frame;
-    int WIDTH = 400;
-    int HEIGHT = 300;
-    String TITLE = "PONG";
-    Dimension gameSize = new Dimension(WIDTH, HEIGHT);
+   int ballX, ballY;
+   int playerX, playerY;
+   int playerScore;
+   int botX, botY;
+   int botScore;
+   int lineX, lineY;
 
-    BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    private Image img;
+    private Graphics gph;
 
-    static boolean gameStart = false;
+    public Pong (){
 
-    public void run() {
+        addKeyListener(new InputCommands());
 
-        while (gameStart){
-            tick();
-            render();
-        }
+        setTitle("Pong");
+        setSize(800, 600);
+        setResizable(false);
+        setVisible(true);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBackground(Color.BLACK);
+
+        playerX = 0;
+        playerY = 300-64;
+
+        botX = 780;
+        botY = 300-64;
+
+        ballX = 400;
+        ballY = 300;
+
+        lineX = 400;
+        lineY = 0;
+
+        playerScore = 0;
+        botScore = 0;
     }
 
-    public synchronized void start(){
-        gameStart = true;
-        new Thread(this).start();
-    }
-    public static synchronized void stop(){
-        gameStart = false;
-        System.exit(0);
-    }
+    public void paint(Graphics g) {
 
-    public Pong(){
-       frame = new JFrame();
-       setMinimumSize(gameSize);
-       setPreferredSize(gameSize);
-       setMaximumSize(gameSize);
-       frame.add(this, BorderLayout.CENTER);
-       frame.pack();
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setResizable(false);
-        frame.setTitle(TITLE);
-        frame.setLocationRelativeTo(null);
-
-        in = new InputCommands(this);
-
-        racket = new Racket(10, 60);
+        img = createImage(getWidth(), getHeight());
+        gph = img.getGraphics();
+        paintComponent(gph);
+        g.drawImage(img, 0, 0, this);
 
     }
 
-    public void tick(){
-         racket.tick(this);
+    public void paintComponent(Graphics g) {
+
+        g.setColor(Color.MAGENTA);
+        g.drawString("Score: " + botScore, 430, 50);
+
+        g.setColor(Color.MAGENTA);
+        g.drawString("Score: " + playerScore, 320, 50);
+
+        g.setColor(Color.GREEN);
+        g.fillRect(botX, botY, 20, 128);
+
+        g.setColor(Color.BLUE);
+        g.fillRect(playerX, playerY, 20, 128);
+
+        g.setColor(Color.ORANGE);
+        g.fillRect(ballX, ballY, 20, 20);
+
+        g.setColor(Color.WHITE);
+        g.fillRect(lineX, lineY, 2, 600);
     }
 
-    public void render(){
-        BufferStrategy bs = getBufferStrategy();
-        if (bs==null){
-           createBufferStrategy(3);
-            return;
-        }
-      Graphics g = bs.getDrawGraphics();
+    public static void main(String[] args) {
 
-        g.setColor(Color.BLACK);
-        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-        racket.render(g);
-        g.dispose();
-        bs.show();
-    }
+        new Pong();
 
-    public static void main (String [] args){
-       Pong pong = new Pong();
-        pong.start();
     }
 }
