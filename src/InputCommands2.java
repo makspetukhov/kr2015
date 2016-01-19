@@ -2,26 +2,26 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
- * Created by Ak__74 on 16.01.16.
+ * Created by Ak__74 on 18.01.16.
  */
-class InputCommands extends KeyAdapter {
+class InputCommands2 extends KeyAdapter {
 
-
-    public InputCommands(Pong pong) {
+    public InputCommands2(Pong pong) {
         super();
     }
+
     public void keyPressed(KeyEvent e) {
 
         int keyCode = e.getKeyCode();
 
-        if (keyCode == e.VK_W) {
+        if (keyCode == e.VK_UP) {
 
-       //   playerY -= playerPos;
+        //    player2Y -= player2Pos;
 
         }
-        if (keyCode == e.VK_S) {
+        if (keyCode == e.VK_DOWN) {
 
-        //   playerY += playerPos;
+        //   player2Y += player2Pos;
 
         }
 
@@ -32,3 +32,4 @@ class InputCommands extends KeyAdapter {
     }
 
 }
+
