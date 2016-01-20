@@ -5,30 +5,24 @@ import java.awt.event.KeyEvent;
  * Created by Ak__74 on 16.01.16.
  */
 class InputCommands extends KeyAdapter {
+    private Player player;
+    private int up, down;
+    private int speed;
 
-
-    public InputCommands(Pong pong) {
+    public InputCommands(Player player, int up, int down) {
         super();
+        this.player = player;
+        this.up = up;
+        this.down = down;
+        this.speed = 50;
     }
+
+    @Override
     public void keyPressed(KeyEvent e) {
-
         int keyCode = e.getKeyCode();
-
-        if (keyCode == e.VK_W) {
-
-       //   playerY -= playerPos;
-
-        }
-        if (keyCode == e.VK_S) {
-
-        //   playerY += playerPos;
-
-        }
-
+        if (keyCode == up)
+            player.setPlayerY(player.getPlayerY()-speed);
+        if (keyCode == down)
+            player.setPlayerY(player.getPlayerY()+speed);
     }
-
-    public void keyReleased(KeyEvent e) {
-
-    }
-
 }

@@ -1,11 +1,28 @@
-import java.awt.*;
-
 /**
  * Created by Ak__74 on 16.01.16.
  */
-public class Ball {
+class Ball {
+    private int ballX;
+    private int ballY;
 
-    public Ball(){
+    public Ball() {
+        ballX = 392;
+        ballY = 290;
+    }
 
+    public int getBallX() {
+        return ballX;
+    }
+
+    public void setBallX(int ballX) {
+        this.ballX = ballX;
+    }
+
+    public int getBallY() {
+        return ballY;
+    }
+
+    public void setBallY(int ballY) {
+        this.ballY = ballY;
     }
 }
