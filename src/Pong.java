@@ -9,7 +9,7 @@ public class Pong extends JFrame implements Runnable {
     private Player player1, player2;
     private Ball ball;
     private Net net;
-
+    boolean direction;
     private Image img;
     private Graphics gph;
 
@@ -53,12 +53,18 @@ public class Pong extends JFrame implements Runnable {
     @Override
     public void run() {
         while (running) {
-            if (ball.getBallX()<700){
-            ball.setBallX(ball.getBallX()+10);
+            if (ball.getBallX()>=700) {
+                direction= true;
             }
-        //    if (ball.getBallX()>700){
-        //        ball.setBallX(ball.getBallX()-10);
-        //    }
+            if (ball.getBallX()<=70) {
+                direction = false;
+            }
+
+            if (direction) {
+                ball.setBallX(ball.getBallX()-10);
+            } else {
+                ball.setBallX(ball.getBallX()+10);
+            }
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
