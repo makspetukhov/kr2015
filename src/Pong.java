@@ -9,13 +9,12 @@ public class Pong extends JFrame implements Runnable {
     private Player player1, player2;
     private Ball ball;
     private Net net;
-    boolean direction;
     private Image img;
     private Graphics gph;
 
     private boolean running;
     private Thread thread;
-
+    private boolean direction;
 
     public Pong() {
         setTitle("Pong");
@@ -53,17 +52,21 @@ public class Pong extends JFrame implements Runnable {
     @Override
     public void run() {
         while (running) {
-            if (ball.getBallX()>=700) {
-                direction= true;
+            if (ball.getBallX() > player2.getPlayerX() && ball.getBallX() < player2.getPlayerX() + 20)
+             if (ball.getBallY() > player2.getPlayerY() && ball.getBallY() < player2.getPlayerY() + 128){
+                direction = true;
             }
-            if (ball.getBallX()<=70) {
+            if (ball.getBallX() > player1.getPlayerX() && ball.getBallX() < player1.getPlayerX() + 20)
+                if (ball.getBallY() > player1.getPlayerY() && ball.getBallY() < player1.getPlayerY() + 128){
                 direction = false;
             }
 
             if (direction) {
                 ball.setBallX(ball.getBallX()-10);
+                ball.setBallY(ball.getBallY()+rand());
             } else {
                 ball.setBallX(ball.getBallX()+10);
+                ball.setBallY(ball.getBallY()-rand());
             }
             try {
                 Thread.sleep(50);
@@ -75,7 +78,10 @@ public class Pong extends JFrame implements Runnable {
     }
 
 
-
+    public int rand(){
+        int number = -2 - (int) (Math.random() * 3);
+        return number;
+    }
 
     @Override
     public void paint(Graphics g) {
