@@ -1,4 +1,4 @@
-﻿import java.awt.*;
+import java.awt.*;
 import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
 
@@ -14,6 +14,8 @@ public class Pong extends JFrame implements Runnable {
     private Graphics gph;
 
     private boolean running;
+    private Thread thread;
+
 
     public Pong() {
         setTitle("Pong");
@@ -22,6 +24,8 @@ public class Pong extends JFrame implements Runnable {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBackground(Color.BLACK);
+
+        thread = new Thread(this, "pong");
 
         player1 = new Player(0);
         player2 = new Player(780);
@@ -39,7 +43,7 @@ public class Pong extends JFrame implements Runnable {
 
     public void start() {
         running = true;
-        run();
+        thread.start();
     }
 
     public void stop() {
@@ -49,14 +53,23 @@ public class Pong extends JFrame implements Runnable {
     @Override
     public void run() {
         while (running) {
+            if (ball.getBallX()<700){
             ball.setBallX(ball.getBallX()+10);
+            }
+        //    if (ball.getBallX()>700){
+        //        ball.setBallX(ball.getBallX()-10);
+        //    }
             try {
-                Thread.sleep(10);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            repaint();
         }
     }
+
+
+
 
     @Override
     public void paint(Graphics g) {
@@ -88,12 +101,12 @@ public class Pong extends JFrame implements Runnable {
     }
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() { 
+        EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
                 Pong game = new Pong();
                 game.setVisible(true);
-//                game.start();
+                game.start();
             }
         });
     }
