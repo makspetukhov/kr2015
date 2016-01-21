@@ -60,7 +60,7 @@ public class Pong extends JFrame implements Runnable {
         //        ball.setBallX(ball.getBallX()-10);
         //    }
             try {
-                Thread.sleep(100);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
