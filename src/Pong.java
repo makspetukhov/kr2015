@@ -36,6 +36,7 @@ public class Pong extends JFrame implements Runnable {
         addKeyListener(new InputCommands(player1, KeyEvent.VK_W , KeyEvent.VK_S));
         addKeyListener(new InputCommands(player2, KeyEvent.VK_UP , KeyEvent.VK_DOWN));
 
+
         running = false;
     }
 
@@ -72,6 +73,12 @@ public class Pong extends JFrame implements Runnable {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+            if (ball.getBallX()<0){
+                player1.increasePlayerScore();
+            }
+            if (ball.getBallX()>800){
+                player2.increasePlayerScore();
             }
             repaint();
         }

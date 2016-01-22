@@ -14,7 +14,7 @@ class InputCommands extends KeyAdapter {
         this.player = player;
         this.up = up;
         this.down = down;
-        this.speed = 50;
+        this.speed = 20;
     }
 
     @Override
