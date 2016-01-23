@@ -76,9 +76,11 @@ public class Pong extends JFrame implements Runnable {
             }
             if (ball.getBallX()<0){
                 player1.increasePlayerScore();
+                direction = false;
             }
             if (ball.getBallX()>800){
                 player2.increasePlayerScore();
+                direction = true;
             }
             repaint();
         }
