@@ -7,13 +7,15 @@ import java.awt.event.KeyEvent;
 class InputCommands extends KeyAdapter {
     private Player player;
     private int up, down;
+    private int ex;
     private int speed;
 
-    public InputCommands(Player player, int up, int down) {
+    public InputCommands(Player player, int up, int down, int ex) {
         super();
         this.player = player;
         this.up = up;
         this.down = down;
+        this.ex=ex;
         this.speed = 20;
     }
 
@@ -24,5 +26,9 @@ class InputCommands extends KeyAdapter {
             player.setPlayerY(player.getPlayerY()-speed);
         if (keyCode == down)
             player.setPlayerY(player.getPlayerY()+speed);
+        if (keyCode==ex){
+            System.exit(0);
+        }
+
     }
 }

@@ -33,8 +33,8 @@ public class Pong extends JFrame implements Runnable {
 
         net = new Net();
 
-        addKeyListener(new InputCommands(player1, KeyEvent.VK_W , KeyEvent.VK_S));
-        addKeyListener(new InputCommands(player2, KeyEvent.VK_UP , KeyEvent.VK_DOWN));
+        addKeyListener(new InputCommands(player1, KeyEvent.VK_W , KeyEvent.VK_S, KeyEvent.VK_ESCAPE));
+        addKeyListener(new InputCommands(player2, KeyEvent.VK_UP , KeyEvent.VK_DOWN, KeyEvent.VK_ESCAPE));
 
 
         running = false;
