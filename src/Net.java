@@ -1,20 +1,20 @@
+
 /**
  * Created by Ak__74 on 20.01.16.
  */
-class Net {
-    private int lineX;
-    private int lineY;
+public class Net {
+
+    private Coordinates coordinates;
 
     public Net(){
-        lineX = 400;
-        lineY = 0;
+        coordinates = new Coordinates(400, 0);
     }
 
-    public int getLineX() {
-        return lineX;
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 
-    public int getLineY() {
-        return lineY;
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 }

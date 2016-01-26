@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import javax.swing.JFrame;
 import java.awt.event.KeyEvent;
@@ -11,10 +12,10 @@ public class Pong extends JFrame implements Runnable {
     private Net net;
     private Image img;
     private Graphics gph;
+    private Logic logic;
 
     private boolean running;
     private Thread thread;
-    private boolean direction;
 
     public Pong() {
         setTitle("Pong");
@@ -33,8 +34,10 @@ public class Pong extends JFrame implements Runnable {
 
         net = new Net();
 
-        addKeyListener(new InputCommands(player1, KeyEvent.VK_W , KeyEvent.VK_S, KeyEvent.VK_ESCAPE));
-        addKeyListener(new InputCommands(player2, KeyEvent.VK_UP , KeyEvent.VK_DOWN, KeyEvent.VK_ESCAPE));
+        logic = new Logic(ball, player1, player2, 5);
+
+        addKeyListener(new InputCommands(player1, KeyEvent.VK_W, KeyEvent.VK_S, KeyEvent.VK_ESCAPE));
+        addKeyListener(new InputCommands(player2, KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_ESCAPE));
 
 
         running = false;
@@ -53,57 +56,20 @@ public class Pong extends JFrame implements Runnable {
     @Override
     public void run() {
         while (running) {
-            if (ball.getBallX() > player2.getPlayerX() && ball.getBallX() < player2.getPlayerX() + 20)
-             if (ball.getBallY() > player2.getPlayerY() && ball.getBallY() < player2.getPlayerY() + 128){
-                direction = true;
-            }
-            if (ball.getBallX() > player1.getPlayerX() && ball.getBallX() < player1.getPlayerX() + 20)
-                if (ball.getBallY() > player1.getPlayerY() && ball.getBallY() < player1.getPlayerY() + 128){
-                direction = false;
-            }
+            logic.setPlayer1(player1);
+            logic.setPlayer2(player2);
+            ball = logic.getNextBallPosition();
 
-            if (direction) {
-                ball.setBallX(ball.getBallX()-10);
-                ball.setBallY(ball.getBallY()+rand());
-            } else {
-                ball.setBallX(ball.getBallX()+10);
-                ball.setBallY(ball.getBallY()-rand());
-            }
             try {
-                Thread.sleep(50);
+                Thread.currentThread().sleep(20);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (ball.getBallX()<0){
-                player1.increasePlayerScore();
-                direction = false;
-            }
-            if (ball.getBallX()>800){
-                player2.increasePlayerScore();
-                direction = true;
-            }
 
-            if (player1.getPlayerY()<=10){
-                player1.setPlayerY(10);
-            }
-            if (player1.getPlayerY()>=470){
-                player1.setPlayerY(470);
-            }
-            if (player2.getPlayerY()<=10){
-                player2.setPlayerY(10);
-            }
-            if (player2.getPlayerY()>=470){
-                player2.setPlayerY(470);
-            }
             repaint();
         }
     }
 
-
-    public int rand(){
-        int number = -2 - (int) (Math.random() * 3);
-        return number;
-    }
 
     @Override
     public void paint(Graphics g) {
@@ -115,6 +81,11 @@ public class Pong extends JFrame implements Runnable {
     }
 
     private void paintComponent(Graphics g) {
+        Coordinates player1Coordinates = player1.getCoordinates();
+        Coordinates player2Coordinates = player2.getCoordinates();
+        Coordinates netCoordinates = net.getCoordinates();
+        Coordinates ballCoordinates = ball.getCoordinates();
+
         g.setColor(Color.CYAN);
         g.drawString("Score: " + player2.getPlayerScore(), 430, 50);
 
@@ -122,16 +93,16 @@ public class Pong extends JFrame implements Runnable {
         g.drawString("Score: " + player1.getPlayerScore(), 320, 50);
 
         g.setColor(Color.GREEN);
-        g.fillRect(player2.getPlayerX(), player2.getPlayerY(), 20, 128);
+        g.fillRect((int) player2Coordinates.getX(), (int) player2Coordinates.getY(), 20, 128);
 
         g.setColor(Color.BLUE);
-        g.fillRect(player1.getPlayerX(), player1.getPlayerY(), 20, 128);
+        g.fillRect((int) player1Coordinates.getX(), (int) player1Coordinates.getY(), 20, 128);
 
         g.setColor(Color.WHITE);
-        g.fillRect(net.getLineX(), net.getLineY(), 2, 600);
+        g.fillRect((int) netCoordinates.getX(), (int) netCoordinates.getY(), 2, 600);
 
         g.setColor(Color.ORANGE);
-        g.fillOval(ball.getBallX(), ball.getBallY(), 20, 20);
+        g.fillOval((int) ballCoordinates.getX(), (int) ballCoordinates.getY(), 20, 20);
     }
 
     public static void main(String[] args) {

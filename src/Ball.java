@@ -1,28 +1,37 @@
+
+
 /**
  * Created by Ak__74 on 16.01.16.
  */
-class Ball {
-    private int ballX;
-    private int ballY;
+public class Ball {
+
+    private Coordinates centerCoordinates;
+    private int radius;
 
     public Ball() {
-        ballX = 392;
-        ballY = 290;
+        centerCoordinates = new Coordinates(392, 290);
+        radius = 10;
     }
 
-    public int getBallX() {
-        return ballX;
+    public Ball(Coordinates centerCoordinates, int radius) {
+        this.centerCoordinates = centerCoordinates;
+        this.radius = radius;
     }
 
-    public void setBallX(int ballX) {
-        this.ballX = ballX;
+    public Coordinates getCoordinates() {
+        return centerCoordinates;
     }
 
-    public int getBallY() {
-        return ballY;
+    public void setCenterCoordinates(Coordinates centerCoordinates) {
+        this.centerCoordinates = centerCoordinates;
     }
 
-    public void setBallY(int ballY) {
-        this.ballY = ballY;
+    public int getRadius() {
+        return radius;
     }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
+
 }

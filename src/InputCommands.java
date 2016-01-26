@@ -1,3 +1,4 @@
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -15,7 +16,7 @@ class InputCommands extends KeyAdapter {
         this.player = player;
         this.up = up;
         this.down = down;
-        this.ex=ex;
+        this.ex = ex;
         this.speed = 20;
     }
 
@@ -23,10 +24,10 @@ class InputCommands extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         if (keyCode == up)
-            player.setPlayerY(player.getPlayerY()-speed);
+            player.getCoordinates().setY(player.getCoordinates().getY() - speed);
         if (keyCode == down)
-            player.setPlayerY(player.getPlayerY()+speed);
-        if (keyCode==ex){
+            player.getCoordinates().setY(player.getCoordinates().getY() + speed);
+        if (keyCode == ex) {
             System.exit(0);
         }
 
